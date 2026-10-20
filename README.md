@@ -2,14 +2,17 @@
 
 # Flipper One Mac Demo
 
-**Explore Flipper OS on your Apple Silicon Mac—no Flipper board required.**
+**A free, open-source way to explore Flipper One software on your Apple Silicon Mac—no Flipper board required.**
 
 An unofficial macOS app that boots the Flipper OS Debian ARM64 image using Apple's Virtualization framework and displays FlipCTL in a native window. Linux runs locally, with persistent storage, virtual Ethernet, software-rendered apps, and audio output through your Mac.
+
+Free to download and use, with no purchase or subscription required. The macOS wrapper and build scripts are open source under the [MIT License](LICENSE), so you can inspect, modify, and build them yourself. Bundled third-party components retain their own licenses.
 
 > This is a software demo, not a native macOS port or a full Flipper One hardware emulator. It is not affiliated with or endorsed by Flipper Devices.
 
 ## Highlights
 
+- **Free and open source:** no paid license or subscription; the macOS wrapper and build scripts are available under MIT.
 - **Self-contained installation:** the DMG includes the app, Linux boot files, and prepared guest image.
 - **No runtime setup:** users do not need UTM, Docker, or a separate image download.
 - **Persistent guest:** installed apps and guest files survive restarts and app updates.
