@@ -124,6 +124,10 @@ Tools/package.sh         Compile, sign, and package the installer
 assets/                  App icon
 ```
 
+## Inspiration
+
+Special thanks to the creator of [this video](https://youtu.be/6YfpFi8XCz8) for inspiring the idea behind this project—exploring Flipper One software on a Mac without needing the physical board.
+
 ## License and credits
 
 The original macOS wrapper and build scripts are available under the [MIT License](LICENSE). This does **not** relicense Flipper OS, Debian, FlipCTL, bundled packages or firmware, or the user-supplied icon. Those components retain their respective licenses and redistribution obligations. Review third-party licensing before distributing a bundled installer.
