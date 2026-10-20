@@ -1,143 +1,129 @@
-<img src="assets/icon.png" width="96" height="96" alt="Flipper One Mac Demo icon">
+<img src="assets/icon.png" width="72" height="72" alt="Flipper One Mac Demo icon">
 
 # Flipper One Mac Demo
 
-**A free, open-source way to explore Flipper One software on your Apple Silicon Mac—no Flipper board required.**
+Run Flipper OS on an Apple Silicon Mac, without a Flipper One board. This app boots a local Linux VM and puts FlipCTL in a native macOS window, with persistent storage, virtual Ethernet, and audio output through your Mac.
 
-An unofficial macOS app that boots the Flipper OS Debian ARM64 image using Apple's Virtualization framework and displays FlipCTL in a native window. Linux runs locally, with persistent storage, virtual Ethernet, software-rendered apps, and audio output through your Mac.
+Free to download and use. The macOS wrapper and build scripts are open source under the [MIT License](LICENSE).
 
-Free to download and use, with no purchase or subscription required. The macOS wrapper and build scripts are open source under the [MIT License](LICENSE), so you can inspect, modify, and build them yourself. Bundled third-party components retain their own licenses.
+**[Download v0.1.2](https://github.com/Nirbhik-Acharya-official/flipper-one-mac-demo/releases/tag/v0.1.2)** · [Screenshots](#screenshots) · [Build from source](#build-from-source)
 
-> This is a software demo, not a native macOS port or a full Flipper One hardware emulator. It is not affiliated with or endorsed by Flipper Devices.
+![Doom running in the Flipper One Mac Demo app](assets/screenshots/doom.jpg)
 
-## Highlights
+*Doom running in the macOS app through FlipCTL's remote-control interface.*
 
-- **Free and open source:** no paid license or subscription; the macOS wrapper and build scripts are available under MIT.
-- **Self-contained installation:** the DMG includes the app, Linux boot files, and prepared guest image.
-- **No runtime setup:** users do not need UTM, Docker, or a separate image download.
-- **Persistent guest:** installed apps and guest files survive restarts and app updates.
-- **Mac audio output:** a virtual sound card connects guest playback to your Mac's default output device. No microphone is exposed.
-- **Native controls:** Start, Shut Down, Reload, and a boot log for troubleshooting.
-
-## Requirements
-
-| Requirement | Details |
-| --- | --- |
-| Mac | Apple Silicon; Intel Macs are not supported by this build |
-| macOS | Build target: macOS 13 or later; tested on macOS 27.0.1 only |
-| Free storage | At least 12 GB for first launch and guest use |
-| Guest resources | 2 GB RAM, 2–4 virtual CPUs, and a 10 GB virtual disk |
-| Network | Guest apps and the app catalog may access the internet through NAT |
+This is an unofficial software demo, not a full Flipper One hardware emulator or a native macOS port of Flipper OS. The device artwork above is part of FlipCTL's interface. This project is not affiliated with Flipper Devices.
 
 ## Install
 
-1. Download `Flipper-One-Mac-Demo.dmg` from [GitHub Releases](https://github.com/Nirbhik-Acharya-official/flipper-one-mac-demo/releases), or build it locally.
+You need an **Apple Silicon Mac** and at least **12 GB of free storage**. The app targets macOS 13 or later; testing so far has been on macOS 27.0.1. Intel Macs are not supported by this build.
+
+1. Download `Flipper-One-Mac-Demo.dmg` from [Releases](https://github.com/Nirbhik-Acharya-official/flipper-one-mac-demo/releases).
 2. Open the DMG and drag **Flipper One Mac Demo.app** into **Applications**.
-3. Launch the app. First launch unpacks the included disk and may take a few minutes; later launches reuse it.
-4. Use FlipCTL to explore the guest and launch apps.
-5. Click **Shut Down** and wait for **Stopped** before closing the app.
+3. Launch the app. The first start unpacks the included guest disk and can take a few minutes.
+4. Open **App Manager** to install or run guest apps.
+5. When finished, click **Shut Down** and wait for **Stopped**.
 
-### Gatekeeper
+The installer includes the guest image and boot files. You do not need UTM, Docker, or a separate Linux download. The VM uses 2 GB of RAM, 2–4 virtual CPUs, and a 10 GB virtual disk. Guest apps can access the internet through NAT.
 
-The app is **ad-hoc signed, not Apple notarized**. macOS may block the first launch. If you trust the build, use Finder's **right-click → Open**, then follow any offered option in **System Settings → Privacy & Security**. Do not disable Gatekeeper globally.
+**macOS security:** the app is ad-hoc signed, not Apple notarized. If Gatekeeper blocks it, and you trust the build, use Finder's **right-click → Open** or the offered option in **System Settings → Privacy & Security**. Do not disable Gatekeeper globally.
 
-### Update to 0.1.2
+**Updating:** shut down the old version before replacing it. Keep your existing guest disk—installed apps and files carry over. Version 0.1.2 adds virtual audio output, Doom audio fixes, safer VM lifecycle handling, and viewer reload/retry controls.
 
-Shut down the old app, replace it with the new app from the DMG, and launch again. **Do not delete your guest disk.** The bundled initramfs applies compatibility settings to both new and existing guests before Linux services start. Installed apps and guest files remain in place.
+## Screenshots
 
-Version 0.1.2 adds virtual audio output, fixes Doom's audio initialization, improves startup/shutdown handling, and adds viewer reload and initial-load retries.
+These are captures of the running macOS app, not mockups. Click an image to view it at full size.
 
-## Compatibility
-
-| Feature | Validation / limitation |
+| App Manager | Internet Radio |
 | --- | --- |
-| Linux boot and FlipCTL viewer | Verified locally, including a connected remote-control page and App Manager |
-| Doom | Launch and gameplay rendering verified with software rendering |
-| Audio | Guest WAV playback completed; Doom produced active stereo PipeWire links and a running virtual PCM device |
-| Other apps | System Monitor, Uptime, Ping, Browser, and Internet Radio passed launch smoke checks |
-| Internet access | Virtual Ethernet/NAT; not a physical Wi-Fi or cellular connection |
-| Physical peripherals | Not emulated: Rockchip RK3576 hardware, MCU, GPIO, radios, LEDs, device display, and USB gadget/controller modes |
+| [![Installed apps and the available app catalog](assets/screenshots/app-manager.jpg)](assets/screenshots/app-manager.jpg) | [![Internet Radio open in the FlipCTL viewer](assets/screenshots/internet-radio.jpg)](assets/screenshots/internet-radio.jpg) |
+| Browse the catalog and launch installed apps. | The radio app's station and volume controls. |
 
-Launch checks are not complete functional tests. The full app catalog, every radio station, audio quality, and every app's controls have **not** been manually validated. Other guest image profiles are unsupported. Automatic viewer discovery currently expects the `192.168.64.0/24` NAT subnet.
+## Inspiration
 
-## Troubleshooting
+Thanks to **[Talking Sasquach](https://www.youtube.com/@TalkingSasquach)** for the idea. His video, **[I Built a Flipper One Emulator for Windows (And It Works!)](https://youtu.be/6YfpFi8XCz8)**, inspired this macOS version.
 
-| Symptom | What to check |
-| --- | --- |
-| First launch takes a while | Allow disk extraction to finish and confirm at least 12 GB of free space |
-| Viewer is blank or disconnected | Wait for Linux to finish booting, inspect **Boot log**, then click **Reload** |
-| No sound | Check guest volume/mute settings, your Mac's selected output device, and Mac volume |
-| Doom fails on an older build | Install 0.1.2 and restart the guest; do not reset the disk |
-| Shutdown times out | Retry **Shut Down** or use the guest OS shutdown command; avoid force-quitting while the guest writes data |
-| Wi-Fi scans or board diagnostics fail | These need physical hardware and are not implemented by the VM |
+[![Watch Talking Sasquach's video about his Flipper One emulator for Windows](https://i.ytimg.com/vi/6YfpFi8XCz8/hqdefault.jpg)](https://youtu.be/6YfpFi8XCz8)
 
-When reporting a bug, include the app version, Mac model, macOS version, affected guest app, reproduction steps, and relevant boot-log excerpts. Remove private information first. **Never upload your guest disk.**
+## What works—and what needs hardware
 
-## Data and security
+Guest boot, the FlipCTL viewer, App Manager, and Doom gameplay have been checked locally. A guest WAV played successfully, and Doom produced an active stereo stream through the virtual sound card. System Monitor, Uptime, Ping, Browser, and Internet Radio have also passed launch smoke checks.
 
-Guest data is stored at:
+This is still a demo. Those checks do not cover the full app catalog, every radio station, audio quality, or every control in each app.
 
-```text
-~/Library/Application Support/Flipper One Mac/guest.img
-```
+- **Graphics:** hosted apps use software rendering rather than the Rockchip GPU.
+- **Audio:** playback goes to your Mac's default output device. No microphone is exposed.
+- **Networking:** virtual Ethernet provides NAT internet access. Wi-Fi and cellular scanning require real radios.
+- **Board features:** MCU, GPIO, LEDs, USB gadget/controller modes, and physical cable diagnostics are not emulated.
 
-Removing the macOS app does not remove this disk. It may contain private files, credentials, or app data. Back it up only after shutting down the guest.
-
-The viewer connects to the guest over a private virtual NAT network using HTTP. The guest is not offline-only, and this demo does not establish a trusted security boundary for guest images or downloaded apps. Run only images and applications you trust.
+Only the upstream image's `@Minimal` profile is supported. Automatic viewer discovery currently expects the `192.168.64.0/24` NAT subnet.
 
 ## Build from source
 
-Builders need an Apple Silicon Mac, Xcode command-line tools, a running Docker installation, `zstd`, `xz`, internet access, and substantial free disk space for intermediate images. **Docker, `zstd`, and `xz` are build-time dependencies only.**
+Building requires an Apple Silicon Mac, Xcode command-line tools, a running Docker installation, `zstd`, `xz`, internet access, and room for several large intermediate images. Docker and the compression tools are **builder-only dependencies**.
 
 From the repository root:
 
 ```sh
-xcode-select --install # If command-line tools are not installed
 bash Tools/prepare-guest.sh
 bash Tools/package.sh
 hdiutil verify dist/Flipper-One-Mac-Demo.dmg
 codesign --verify --strict 'build/dmg-root/Flipper One Mac Demo.app'
 ```
 
-The output is `dist/Flipper-One-Mac-Demo.dmg`. Signing is ad-hoc; the build does not notarize the app.
+If needed, install Apple's command-line tools with `xcode-select --install` first. The finished installer is `dist/Flipper-One-Mac-Demo.dmg`; it is ad-hoc signed, not notarized.
 
-### Build pipeline
+<details>
+<summary>Build pipeline and pinned image</summary>
 
-1. `prepare-guest.sh` downloads official image build **2413**, verifies its SHA-256, and uses a privileged build-time Debian container to install a compatible ARM64 kernel and guest services. Rerunning this script recreates the prepared build image.
-2. `patch-initrd.sh` embeds boot-time settings for hosted-app runtime directories, software rendering, and audio routing. These also migrate existing guest disks without a reset.
-3. `package.sh` compiles the Swift app, embeds the kernel/initramfs and XZ-compressed guest archive, creates the app icon, signs the bundle, and produces the DMG.
+`prepare-guest.sh` downloads official image build **2413**, checks its SHA-256, and uses a privileged build-time Debian container to add a compatible ARM64 kernel and guest services. Rerunning it recreates the prepared build image.
 
-Pinned upstream image: `debian-512-nobootloader-2413.img.zst`
+`patch-initrd.sh` adds boot-time compatibility settings for runtime directories, software rendering, and audio. This also applies the fixes to existing guest disks without a reset.
+
+`package.sh` compiles the Swift app, embeds the boot files and XZ-compressed guest archive, signs the bundle, and creates the DMG.
 
 ```text
+Image:   debian-512-nobootloader-2413.img.zst
 SHA-256: 36b0c6bf504b2b8400da25e136807a5e223a21b99657d9e623b9489e55e0b0aa
 ```
 
-Build intermediates stay in `.artifacts/`; `.artifacts/`, `build/`, and `dist/` are ignored by Git. Publish installers as release assets, not source files. **Never package a user's live guest disk:** releases must use the prepared build image, not the disk in Application Support.
+`.artifacts/`, `build/`, and `dist/` are ignored by Git. Publish installers as release assets. Never package a user's guest disk from Application Support; use the prepared build image.
 
-## Project layout
+</details>
+
+## Troubleshooting
+
+| Problem | Try this |
+| --- | --- |
+| First launch is slow | Let extraction finish and check free storage. |
+| Blank or disconnected viewer | Wait for boot to finish, check **Boot log**, then click **Reload**. |
+| No audio | Check guest volume/mute, Mac volume, and your Mac's selected output device. |
+| Doom fails on an older version | Update to 0.1.2 and restart the guest. There is no need to reset the disk. |
+| Shutdown times out | Retry **Shut Down** or use the guest OS shutdown command. Avoid force-quitting during disk writes. |
+| A board diagnostic fails | Check whether it needs hardware that the VM does not expose. |
+
+For a bug report, include the app version, Mac model, macOS version, guest app, reproduction steps, and relevant boot-log excerpts. Remove private information first. Do not upload your guest disk.
+
+## Guest data
+
+Your guest disk lives at:
 
 ```text
-Sources/FlipperOneMac/    SwiftUI app, VM lifecycle, and FlipCTL viewer
-Resources/               App metadata and virtualization entitlement
-Tools/guest/             Linux services and compatibility settings
-Tools/prepare-guest.sh   Prepare the upstream guest image
-Tools/patch-initrd.sh    Apply compatibility settings during guest boot
-Tools/package.sh         Compile, sign, and package the installer
-assets/                  App icon
+~/Library/Application Support/Flipper One Mac/guest.img
 ```
 
-## Inspiration
+Deleting the macOS app does not delete this disk. It can contain private files or credentials; shut down the guest before backing it up.
 
-Special thanks to the creator of [this video](https://youtu.be/6YfpFi8XCz8) for inspiring the idea behind this project—exploring Flipper One software on a Mac without needing the physical board.
+The viewer uses HTTP over the private virtual network. The guest can access the internet, and this demo is not intended as a security sandbox for untrusted images or apps.
 
-## License and credits
+## Credits and licensing
 
-The original macOS wrapper and build scripts are available under the [MIT License](LICENSE). This does **not** relicense Flipper OS, Debian, FlipCTL, bundled packages or firmware, or the user-supplied icon. Those components retain their respective licenses and redistribution obligations. Review third-party licensing before distributing a bundled installer.
+The macOS wrapper and build scripts use the [MIT License](LICENSE). Flipper OS, Debian, FlipCTL, bundled packages and firmware, and the supplied icon retain their own licenses and redistribution requirements. The wrapper's MIT license does not relicense those components.
 
-Flipper names and imagery belong to their respective owners. The icon is used for this demo and is not offered as a general-purpose brand asset.
+Flipper names and imagery belong to their respective owners. The icon is used for this demo, not offered as a general-purpose brand asset.
 
-- [Flipper One development log](https://docs.flipper.net/one/dev-log/10)
-- [Official Linux image builds](https://dl-linux-images.flipp.dev/full-img/)
-- [Flipper One Linux build scripts](https://github.com/flipperdevices/flipperone-linux-build-scripts)
+- [Talking Sasquach's original video](https://youtu.be/6YfpFi8XCz8)
 - [FlipCTL](https://github.com/flipperdevices/flipctl-slint)
+- [Flipper One development log](https://docs.flipper.net/one/dev-log/10)
+- [Official Linux images](https://dl-linux-images.flipp.dev/full-img/)
+- [Flipper One Linux build scripts](https://github.com/flipperdevices/flipperone-linux-build-scripts)
