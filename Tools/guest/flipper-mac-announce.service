@@ -1,0 +1,11 @@
+[Unit]
+Description=Announce Flipper One VM address to macOS
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/flipper-mac-announce
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,14 @@
+#!/bin/sh
+set -eu
+
+attempt=0
+while [ "$attempt" -lt 60 ]; do
+    address="$(ip -4 -o addr show scope global | awk '$2 ~ /^(en|eth)/ { split($4, fields, "/"); print fields[1]; exit }')"
+    if [ -n "$address" ]; then
+        printf 'FLIPPER_URL=http://%s:8899/\n' "$address" > /dev/hvc0
+        exit 0
+    fi
+    attempt=$((attempt + 1))
+    sleep 2
+done
+exit 1

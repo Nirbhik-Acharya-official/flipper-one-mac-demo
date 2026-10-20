@@ -1,0 +1,16 @@
+#!/bin/sh
+set -eu
+
+case "${1:-}" in
+    prereqs) exit 0 ;;
+esac
+
+destination="${rootmnt:?}/etc/systemd/system/flipctl.service.d"
+mkdir -p "$destination"
+cp /conf/flipctl-mac.conf "$destination/90-flipper-mac.conf"
+chmod 644 "$destination/90-flipper-mac.conf"
+mkdir -p "$rootmnt/etc/wireplumber/wireplumber.conf.d" "$rootmnt/etc/modules-load.d"
+cp /conf/flipper-mac-audio.conf "$rootmnt/etc/wireplumber/wireplumber.conf.d/90-flipper-mac.conf"
+cp /conf/flipper-mac-modules.conf "$rootmnt/etc/modules-load.d/flipper-mac.conf"
+chmod 644 "$rootmnt/etc/wireplumber/wireplumber.conf.d/90-flipper-mac.conf" "$rootmnt/etc/modules-load.d/flipper-mac.conf"
+echo 'Flipper Mac: hosted-app runtime, software rendering and audio configured.'

@@ -1,0 +1,18 @@
+[Unit]
+Description=Flipper One web interface on macOS
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=user
+Group=user
+WorkingDirectory=/usr/share/flipctl
+Environment=HOME=/home/user
+Environment=PATH=/usr/local/bin:/usr/bin:/bin:/usr/games
+ExecStart=/usr/bin/flipctl --headless --remote 0.0.0.0:8899 --assets /usr/share/flipctl/assets/remote
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
